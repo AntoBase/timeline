@@ -46,7 +46,6 @@ Template.BlazeTimeline.events({
     'mousedown .timeline'(e, template){
         e.preventDefault();
         e.stopPropagation();
-
         template.mode.set({type: 'panning', offsetX: e.offsetX, existingOffset: template.offset.get()});
     },
     'mousemove .timelineView': function(e, template){
@@ -59,6 +58,12 @@ Template.BlazeTimeline.events({
     },
     'mouseup .timelineView'(e, template){
         template.mode.set({type: 'none'});
+    },
+    'wheel': function(e, template){
+        if(e.originalEvent.deltaX === 0) return; // A vertical scroll also ends up here, to prevent page blockage we return if the deltaX is 0
+        var offset = template.offset.get();
+        template.offset.set(offset - e.originalEvent.deltaX);
+        e.preventDefault();
     }
 });
 
@@ -74,7 +79,7 @@ Template.BlazeTimelineHighlightable.helpers({
         var correction = (1/265)*900;
         return 900 - daysAgo*correction +Template.instance().data.offset;
     },
-    getX(index){
+    getY(index){
         return 60 + index * 50;
     },
     hover(){

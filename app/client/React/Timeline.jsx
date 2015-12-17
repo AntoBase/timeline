@@ -26,7 +26,7 @@ ReactTimeline = React.createClass({
             return <span>not active yet...</span>;
 
         var styles = {
-            svg: { overflow: 'hidden', position: 'relative', width: '900px', height: '400px', border: 'solid #b9a1a1 1px'},
+            svg: { overflow: 'hidden', position: 'relative', width: '900px', height: '200px', border: 'solid #b9a1a1 1px'},
             document: {
                 text: {
                     textAnchor: "end",
@@ -47,7 +47,6 @@ ReactTimeline = React.createClass({
 
                 <TimelineHeader width={this.state.width} timelineGrab={this.timelineGrab} getX={this.getX}/>
 
-                {console.log(this.props.documents)}
                 {_.map(this.props.documents, (document, i)=>{
                     var y = this.getY(i);
                     var startX = this.getX(document.creationTimestamp);
