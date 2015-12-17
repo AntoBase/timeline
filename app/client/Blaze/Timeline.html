@@ -1,0 +1,108 @@
+<template name="BlazeTimeline">
+    <svg
+            class="timelineView"
+            xmlns="http://www.w3.org/2000/svg"
+            version="1.1"
+            style="overflow: hidden; position: relative; width:900px; height:700px">
+
+        <line
+                x1="0"
+                y1="15"
+                x2="{{width}}"
+                y2="15"
+                class="timeline"
+                stroke-width="28"
+                stroke="#f1f1f1"
+                style="cursor:pointer;"
+                transform="translate({{offssetX}}, 0)"></line>
+        <line
+                x1="0"
+                y1="30"
+                x2="{{width}}"
+                y2="30"
+                class="timeline"
+                style="stroke-width:3;stroke:#F1D9D9;cursor:pointer;"
+                transform="translate({{offssetX}}, 0)"></line>
+
+        {{#each time in times}}
+            <text text-anchor="middle"
+                  x="{{getX time.timestamp}}"
+                  y="20"
+                  fill="black"
+                  transform="translate({{offssetX}}, 0)">{{time.text}}</text>
+            <line
+                    x1="{{getX time.timestamp}}"
+                    y1="30"
+                    x2="{{getX time.timestamp}}"
+                    y2="400" style='stroke-width:1;stroke:#fbe3e3'
+                    transform="translate({{offssetX}}, 0)" ></line>
+            <line
+                    x1="{{getX time.timestamp}}"
+                    y1="27"
+                    x2="{{getX time.timestamp}}"
+                    y2="33"
+                    style='stroke-width:3;stroke:#b9a1a1'
+                    transform="translate({{offssetX}}, 0)" ></line>
+        {{/each}}
+
+        {{#each document in documents}}
+            <text
+                    text-anchor="end"
+                    alignment-baseline="middle"
+                    x="{{getX document.createdAt}}"
+                    y="{{getY @index }}"
+                    fill="black"
+                    transform="translate(-20, 0) translate({{offssetX}}, 0)">{{document.name}}</text>
+
+            <line
+                    x1="{{getX document.createdAt}}"
+                    y1="{{getY @index }}"
+                    x2="{{width}}"
+                    y2="{{getY @index }}"
+                    stroke-width="3"
+                    stroke="{{#if document.activated}}#45A3E6{{else}}#F1D9D9{{/if}}"></line>
+
+            <circle
+                    fill="#05C352"
+                    stroke="none"
+                    stroke-width="3"
+                    cx="{{getX document.createdAt}}"
+                    cy="{{getY @index }}"
+                    r="10"></circle>
+
+            {{#with document=document index=@index}}
+                {{#each event in document.events}}
+                    <g>{{> BlazeTimelineHighlightable color='#05622B' text=document.description timestamp=event.timestamp index=index offset=offset}}</g>
+                {{/each}}
+            {{/with}}
+        {{/each}}
+    </svg>
+</template>
+
+<template name="BlazeTimelineHighlightable">
+    {{#if hover}}
+        <circle
+                fill="{{color}}"
+                stroke="none"
+                stroke-width="3"
+                cx="{{getX timestamp}}"
+                cy="{{getY index}}"
+                r="10"
+                class="item"
+                style=""></circle>
+
+        <text text-anchor="middle"
+              x="{{getX timestamp}}"
+              y="{{getY index}}"
+              fill="black">{{text}}</text>
+    {{/if}}
+
+    <circle
+            fill="{{color}}"
+            stroke="none"
+            stroke-width="5"
+            cx="{{getX timestamp}}"
+            cy="{{getY index}}"
+            r="3"
+            class="item"></circle>
+</template>
