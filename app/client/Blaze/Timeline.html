@@ -1,8 +1,9 @@
 <template name="BlazeTimeline">
+    <h2>Blaze Timeline ({{documents.length}} documents)</h2>
     <svg class="timelineView"
          xmlns="http://www.w3.org/2000/svg"
          version="1.1"
-         style="overflow: hidden; position: relative; width:900px; height:200px;border: solid #b9a1a1 1px">
+         style="overflow: hidden; position: relative; width:900px; height:500px;border: solid #b9a1a1 1px">
 
         <line x1="0" y1="15" x2="{{width}}" y2="15" class="timeline" style="cursor:pointer;stroke:#f1f1f1;stroke-width:28"></line>
         <line x1="0" y1="30" x2="{{width}}" y2="30" class="timeline" style="stroke-width:3;stroke:#F1D9D9;cursor:pointer;"></line>

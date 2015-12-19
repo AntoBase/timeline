@@ -26,7 +26,7 @@ ReactTimeline = React.createClass({
             return <span>not active yet...</span>;
 
         var styles = {
-            svg: { overflow: 'hidden', position: 'relative', width: '900px', height: '200px', border: 'solid #b9a1a1 1px'},
+            svg: { overflow: 'hidden', position: 'relative', width: '900px', height: '500px', border: 'solid #b9a1a1 1px'},
             document: {
                 text: {
                     textAnchor: "end",
@@ -40,29 +40,32 @@ ReactTimeline = React.createClass({
         };
 
         return (
-            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style={styles.svg}
-                 onMouseMove={this.timelineDrag}
-                 onMouseUp={this.timelineDrop}
-                 onWheel={this.timelinePan}>
+            <div>
+                <h2>React Timeline ({this.props.documents.length} documents)</h2>
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style={styles.svg}
+                     onMouseMove={this.timelineDrag}
+                     onMouseUp={this.timelineDrop}
+                     onWheel={this.timelinePan}>
 
-                <TimelineHeader width={this.state.width} timelineGrab={this.timelineGrab} getX={this.getX}/>
+                    <TimelineHeader width={this.state.width} timelineGrab={this.timelineGrab} getX={this.getX}/>
 
-                {_.map(this.props.documents, (document, i)=>{
-                    var y = this.getY(i);
-                    var startX = this.getX(document.creationTimestamp);
-                    return (
-                        <g key={document.creationTimestamp}>
-                            <text x={startX-20} y={y} style={styles.document.text}>{document.name}</text>
-                            <line x1={startX} y1={y} x2={this.state.width} y2={y} style={ document.activated ? styles.document.activeLine : styles.document.nonActiveLine } />
-                            <circle cx={startX} cy={y} style={styles.document.startCircle}/>
+                    {_.map(this.props.documents, (document, i)=>{
+                        var y = this.getY(i);
+                        var startX = this.getX(document.creationTimestamp);
+                        return (
+                            <g key={document.uuid}>
+                                <text x={startX-20} y={y} style={styles.document.text}>{document.name}</text>
+                                <line x1={startX} y1={y} x2={this.state.width} y2={y} style={ document.activated ? styles.document.activeLine : styles.document.nonActiveLine } />
+                                <circle cx={startX} cy={y} style={styles.document.startCircle}/>
 
-                            {_.map(document.events, (event)=>{
-                                return <TimelineHooverable key={event.timestamp} color='#05622B' text={event.description} x={this.getX(event.timestamp)} y={y} />;
-                                })}
-                        </g>
-                        );
-                    })}
-            </svg>
+                                {_.map(document.events, (event)=>{
+                                    return <TimelineHooverable key={event.timestamp} color='#05622B' text={event.description} x={this.getX(event.timestamp)} y={y} />;
+                                    })}
+                            </g>
+                            );
+                        })}
+                </svg>
+            </div>
         );
     },
     getX(date){
