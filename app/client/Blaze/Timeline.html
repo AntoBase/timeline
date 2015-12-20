@@ -21,7 +21,7 @@
                     stroke-width="3" stroke="{{#if document.activated}}#45A3E6{{else}}#F1D9D9{{/if}}"></line>
 
             <circle cx="{{getX document.creationTimestamp}}" cy="{{getY @index }}"
-                    style="fill: #05C352;stroke:none;stroke-width:3;r:10"></circle>
+                    style="fill: #05C352;stroke:none;stroke-width:3;" r="10"></circle>
 
             {{#with document=document index=@index}}
                 {{#each event in document.events}}
@@ -34,8 +34,8 @@
 
 <template name="BlazeTimelineHighlightable">
     {{#if hover}}
-        <circle cx="{{getX timestamp}}" cy="{{getY index}}" class="item" style="fill:{{color}};stroke:none;stroke-width:3;r:10"></circle>
+        <circle cx="{{getX timestamp}}" cy="{{getY index}}" class="item" style="fill:{{color}};stroke:none;stroke-width:3;" r="10"></circle>
         <text x="{{getX timestamp}}" y="{{getY index}}" text-anchor="middle" fill="black">{{text}}</text>
     {{/if}}
-    <circle cx="{{getX timestamp}}" cy="{{getY index}}" style="fill:{{color}};stroke:none;stroke-width:5;r:5;" class="item"></circle>
+    <circle cx="{{getX timestamp}}" cy="{{getY index}}" style="fill:{{color}};stroke:none;stroke-width:5;" r="5" class="item"></circle>
 </template>

@@ -48,7 +48,7 @@ Template.BlazeTimeline.events({
         e.stopPropagation();
         template.mode.set({type: 'panning', offsetX: e.pageX, existingOffset: template.offset.get()});
     },
-    'vmousemove .timelineView': function(e, template){
+    'vmousemove .timelineView'(e, template){
         var mode = template.mode.get();
         switch(mode.type){
             case 'panning':

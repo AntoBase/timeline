@@ -35,7 +35,7 @@ ReactTimeline = React.createClass({
                 },
                 activeLine: { strokeWidth: "3", stroke: '#45A3E6' },
                 nonActiveLine: { strokeWidth: "3", stroke: '#F1D9D9'},
-                startCircle: {r: 10, fill: "#05C352", stroke: "none", strokeWidth: "3"}
+                startCircle: { fill: "#05C352", stroke: "none", strokeWidth: "3"}
             }
         };
 
@@ -60,7 +60,7 @@ ReactTimeline = React.createClass({
                             <g key={document.uuid}>
                                 <text x={startX-20} y={y} style={styles.document.text}>{document.name}</text>
                                 <line x1={startX} y1={y} x2={this.state.width} y2={y} style={ document.activated ? styles.document.activeLine : styles.document.nonActiveLine } />
-                                <circle cx={startX} cy={y} style={styles.document.startCircle}/>
+                                <circle cx={startX} cy={y} style={styles.document.startCircle} r="10"/>
 
                                 {_.map(document.events, (event)=>{
                                     return <TimelineHooverable key={event.timestamp} color='#05622B' text={event.description} x={this.getX(event.timestamp)} y={y} />;
