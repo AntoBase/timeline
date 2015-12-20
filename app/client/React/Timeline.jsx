@@ -3,12 +3,12 @@ ReactTimeline = React.createClass({
         return {width: 900, mode: {type: 'none'}, offset: 0};
     },
     timelineGrab(e){
-        this.setState({mode: {type: 'panning', offsetX: e.pageX, existingOffset: this.state.offset}});
+        this.setState({mode: {type: 'panning', offsetX: (e.pageX || e.targetTouches[0].pageX), existingOffset: this.state.offset}});
     },
     timelineDrag(e){
         switch(this.state.mode.type){
             case 'panning':
-                this.setState({offset: this.state.mode.existingOffset + e.pageX - this.state.mode.offsetX});
+                this.setState({offset: this.state.mode.existingOffset + (e.pageX || e.targetTouches[0].pageX) - this.state.mode.offsetX});
                 break;
         }
     },
@@ -45,7 +45,11 @@ ReactTimeline = React.createClass({
                 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style={styles.svg}
                      onMouseMove={this.timelineDrag}
                      onMouseUp={this.timelineDrop}
-                     onWheel={this.timelinePan}>
+                     onWheel={this.timelinePan}
+                     onTouchCancel={this.timelineDrop}
+                     onTouchEnd={this.timelineDrop}
+                     onTouchMove={this.timelineDrag}
+                     onTouchStart={this.timelineGrab}>
 
                     <TimelineHeader width={this.state.width} timelineGrab={this.timelineGrab} getX={this.getX}/>
 

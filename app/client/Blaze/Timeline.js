@@ -43,20 +43,20 @@ Template.BlazeTimeline.helpers({
 });
 
 Template.BlazeTimeline.events({
-    'mousedown .timeline'(e, template){
+    'vmousedown .timelineView'(e, template){
         e.preventDefault();
         e.stopPropagation();
-        template.mode.set({type: 'panning', offsetX: e.offsetX, existingOffset: template.offset.get()});
+        template.mode.set({type: 'panning', offsetX: e.pageX, existingOffset: template.offset.get()});
     },
-    'mousemove .timelineView': function(e, template){
+    'vmousemove .timelineView': function(e, template){
         var mode = template.mode.get();
         switch(mode.type){
             case 'panning':
-                template.offset.set(mode.existingOffset + e.offsetX - mode.offsetX);
+                template.offset.set(mode.existingOffset + e.pageX - mode.offsetX);
                 break;
         }
     },
-    'mouseup .timelineView'(e, template){
+    'vmouseup .timelineView'(e, template){
         template.mode.set({type: 'none'});
     },
     'wheel': function(e, template){
